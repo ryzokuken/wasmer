@@ -166,6 +166,7 @@ mod tests {
 
         let mut features = wabt::Features::new();
         features.enable_simd();
+        features.enable_threads();
         let mut parser: ScriptParser =
             ScriptParser::from_source_and_name_with_features(&source, filename, features)
                 .expect(&format!("Failed to parse script {}", &filename));
@@ -203,7 +204,10 @@ mod tests {
                         let spectest_import_object =
                             get_spectest_import_object(&registered_modules);
                         let config = CompilerConfig {
-                            features: Features { simd: true },
+                            features: Features {
+                                simd: true,
+                                threads: true,
+                            },
                             ..Default::default()
                         };
                         let module = wasmer_runtime_core::compile_with_config(
@@ -631,7 +635,10 @@ mod tests {
                     //                    println!("AssertInvalid");
                     let result = panic::catch_unwind(|| {
                         let config = CompilerConfig {
-                            features: Features { simd: true },
+                            features: Features {
+                                simd: true,
+                                threads: true,
+                            },
                             ..Default::default()
                         };
                         wasmer_runtime_core::compile_with_config(
@@ -682,7 +689,10 @@ mod tests {
 
                     let result = panic::catch_unwind(|| {
                         let config = CompilerConfig {
-                            features: Features { simd: true },
+                            features: Features {
+                                simd: true,
+                                threads: true,
+                            },
                             ..Default::default()
                         };
                         wasmer_runtime_core::compile_with_config(
@@ -797,7 +807,10 @@ mod tests {
                 CommandKind::AssertUnlinkable { module, message: _ } => {
                     let result = panic::catch_unwind(|| {
                         let config = CompilerConfig {
-                            features: Features { simd: true },
+                            features: Features {
+                                simd: true,
+                                threads: true,
+                            },
                             ..Default::default()
                         };
                         let module = wasmer_runtime_core::compile_with_config(
